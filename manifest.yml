@@ -7,9 +7,16 @@ metadata:
 spec:
   containers:
   - name: flask-container
-    image: satulakhil/frontend:React
+    image: dineshdk07/myapp:latest
+    #resources:
+    # requests:
+    #   memory: "800Mi"
+    #   cpu: "1Gi"
+    # limits:
+    #   memory: "800Mi"
+    #   cpu: "1Gi"
     ports:
-    - containerPort: 3000
+    - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -20,7 +27,7 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 3000
+    targetPort: 8080
     protocol: TCP
   selector:
     app: flask-hello
@@ -35,7 +42,7 @@ metadata:
 spec:
   containers:
   - name: flask-container
-    image: dineshdk07/myapp:latest
+    image: jenkins/jenkins:lts
     ports:
     - containerPort: 8080
 ---
@@ -62,9 +69,9 @@ metadata:
 spec:
   containers:
   - name: flask-container
-    image: nginx
+    image: satulakhil/frontend:React
     ports:
-    - containerPort: 80
+    - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
@@ -75,7 +82,7 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 80
+    targetPort: 3000
     protocol: TCP
   selector:
     app: flask-details
